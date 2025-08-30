@@ -7,6 +7,7 @@ import FAQ from "./pages/faq";
 import Gallery from "./pages/gallery";
 import Products from "./pages/products";
 import Contact from "./pages/contact";
+import ProductCategory from "./pages/product-category"; 
 
 function App() {
   const navbarStyle = {
@@ -27,6 +28,7 @@ function App() {
   const linkStyle = {
     color: "black",
     textDecoration: "none",
+    cursor: "pointer",
   };
 
   const footerStyle = {
@@ -50,8 +52,34 @@ function App() {
           <li><Link to="/history" style={linkStyle}>History</Link></li>
           <li><Link to="/faq" style={linkStyle}>FAQ</Link></li>
           <li><Link to="/gallery" style={linkStyle}>Gallery</Link></li>
-          <li><Link to="/products" style={linkStyle}>Products</Link></li>
+
+          {/* Products dropdown */}
+          <li style={{ position: "relative" }}
+              onMouseEnter={e => e.currentTarget.querySelector(".products-dropdown").style.display = "block"}
+              onMouseLeave={e => e.currentTarget.querySelector(".products-dropdown").style.display = "none"}>
+            <Link to="/products" style={linkStyle}>Products ▾</Link>
+            <ul className="products-dropdown" style={{
+              display: "none",
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              backgroundColor: "white",
+              border: "1px solid #ccc",
+              listStyle: "none",
+              padding: "0",
+              margin: "0",
+              minWidth: "150px",
+              zIndex: 1000,
+            }}>
+              <li><Link to="/product-category/box" style={{...linkStyle, padding: "8px 16px", display: "block"}}>Box Spices</Link></li>
+              <li><Link to="/product-category/pouch" style={{...linkStyle, padding: "8px 16px", display: "block"}}>Pouch Spices</Link></li>
+              <li><Link to="/product-category/whole" style={{...linkStyle, padding: "8px 16px", display: "block"}}>Whole Spices</Link></li>
+              <li><Link to="/product-category/other" style={{...linkStyle, padding: "8px 16px", display: "block"}}>Other Products</Link></li>
+            </ul>
+          </li>
+
           <li><Link to="/contact" style={linkStyle}>Contact</Link></li>
+
           <li>
             <Link
               to="/order"
@@ -81,7 +109,11 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/product-category/:category" element={<ProductCategory />} />
         <Route path="/contact" element={<Contact />} />
+
+        {/* Product category routes */}
+        <Route path="/product-category/:category" element={<ProductCategory />} />
       </Routes>
 
       {/* Footer */}
